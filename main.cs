@@ -1,40 +1,48 @@
+
+
 // Created by: Allen Li
-// Created on: Oct 2022
+// Created on: Dec 2022
 //
-// This program displays, "Multiplication Calculator"
+//This program displays a file and updates the number presented
 
 using System;
+using System.Threading.Tasks;
+using System.IO;
+
 class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main()
     {
-        System.Random random = new System.Random();
-        double firstNumber;
-        double secondNumber;
-        Console.Write("Multiplication Calculator");
+
+        string userAnswer;
+        int counter = 0;
+
+        Console.WriteLine("you prefer yes or no?");
         Console.WriteLine("");
-        Console.Write("Input two number to find out the product");
+
+        Console.WriteLine("Enter either yes or no ");
         Console.WriteLine("");
-        Console.Write("Input the first number:");
-        firstNumber = Convert.ToDouble(Console.ReadLine());
-        Console.Write("Input the second number: ");
-        secondNumber = Convert.ToDouble(Console.ReadLine());
-        double product = 0;
-        double counter = 0;
-        while (counter < Math.Abs(secondNumber))
+        userAnswer = (Console.ReadLine());
+
+        while (userAnswer == "no")
         {
             counter++;
-            product = product + Math.Abs(firstNumber);
-        }
-        if ((firstNumber < 0 && secondNumber > 0) || (secondNumber < 0 && firstNumber > 0))
-        {
-            Console.WriteLine("-" + product);
-        }
-        else
-        {
-            Console.WriteLine(product);
-        }
-        Console.WriteLine("");
-        Console.Write("/Done");
+            string text = "Total: " + counter;
+
+            await File.WriteAllTextAsync("WriteText.txt", text);
+            Console.WriteLine("File Updated...");
+            Console.WriteLine("");
+
+            var someText = await File.ReadAllTextAsync(@"WriteText.txt");
+            Console.WriteLine(someText);
+            Console.WriteLine("");
+
+            Console.WriteLine("How about now? Enter either yes or no: ");
+            userAnswer = (Console.ReadLine());
+            Console.WriteLine("");
+        };
+
+        Console.WriteLine("Good bye!");
+        Console.WriteLine("\nDone.");
     }
 }
